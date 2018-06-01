@@ -6,12 +6,12 @@
 /*   By: cooswold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 16:40:50 by cooswold          #+#    #+#             */
-/*   Updated: 2018/06/01 00:35:25 by cooswold         ###   ########.fr       */
+/*   Updated: 2018/06/01 00:38:56 by cooswold         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-# include "libft/includes/libft.h"
+#include "libft.h"
 
 int		check_string(const int fd, char **str, char **line)
 {
