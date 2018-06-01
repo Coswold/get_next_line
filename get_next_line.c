@@ -6,12 +6,11 @@
 /*   By: cooswold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 16:40:50 by cooswold          #+#    #+#             */
-/*   Updated: 2018/05/31 22:58:49 by cooswold         ###   ########.fr       */
+/*   Updated: 2018/06/01 00:25:16 by cooswold         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <fcntl.h>
 
 int		check_string(const int fd, char **str, char **line)
 {
@@ -19,18 +18,17 @@ int		check_string(const int fd, char **str, char **line)
 	char	*temp;
 
 	i = 0;
-	while (str[fd][i] != '\n' && str[fd][i] != '\0')
+	while (str[fd][i] != '\0' && str[fd][i] != '\n')
 		i++;
 	*line = ft_strsub(str[fd], 0, i);
 	temp = str[fd];
 	if (temp[i] == '\n')
 	{
 		str[fd] = ft_strsub(str[fd], i + 1, ft_strlen(str[fd]) - i);
-		free(temp);
+		ft_strdel(&temp);
 		return (1);
 	}
-	str[fd] = ft_strsub(str[fd], i, 0);
-	free(temp);
+	ft_strdel(&str[fd]);
 	return (0);
 }
 
@@ -39,6 +37,7 @@ int		find(int fd, char **line, int ret, char **str)
 	int		i;
 	char	buff[BUFF_SIZE + 1];
 	char	*temp;
+	char	*temp2;
 
 	while ((ret = read(fd, buff, BUFF_SIZE)) > 0)
 	{
@@ -47,8 +46,10 @@ int		find(int fd, char **line, int ret, char **str)
 		while (buff[i] != '\n' && buff[i] != '\0')
 			i++;
 		temp = *line;
-		*line = ft_strjoin(*line, ft_strsub(buff, 0, i));
+		temp2 = ft_strsub(buff, 0, i);
+		*line = ft_strjoin(*line, temp2);
 		free(temp);
+		free(temp2);
 		if (buff[i] == '\n')
 		{
 			str[fd] = ft_strsub(buff, i + 1, BUFF_SIZE - i);
